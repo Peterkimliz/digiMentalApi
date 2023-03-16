@@ -18,7 +18,7 @@ import java.util.Optional;
 public class CategoryService {
 
     @Autowired
-    CategoryRepository categoryRepository;
+    private  CategoryRepository categoryRepository;
 
     public Categories createCategory(CategoryDto categoryDto) {
         Optional<Categories> foundCategory = categoryRepository.findByName(categoryDto.getName().toLowerCase().trim());
