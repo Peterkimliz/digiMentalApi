@@ -15,8 +15,9 @@ public class WebSecurity {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+
                 .authorizeHttpRequests()
-                .requestMatchers("/api/categories/all","/api/categories/")
+                .requestMatchers("/api/categories/all/**","/api/categories/category/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated();

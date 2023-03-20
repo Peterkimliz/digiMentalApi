@@ -19,6 +19,7 @@ public class Patient {
     private String id;
     private String email;
     private String username;
+    private String phone;
     @JsonIgnore
     private  String password;
     private String dob;
