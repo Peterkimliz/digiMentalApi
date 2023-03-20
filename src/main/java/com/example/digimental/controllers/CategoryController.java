@@ -28,7 +28,7 @@ public class CategoryController {
         return new ResponseEntity<>(categories, categories.size() == 0 ? HttpStatus.NOT_FOUND : HttpStatus.OK);
     }
 
-    @GetMapping("categro{id}")
+    @GetMapping("category/{id}")
     public ResponseEntity<Categories> getCategoryById(@PathVariable("id") String id) {
         return new ResponseEntity<>(categoryService.getCategoryById(id), HttpStatus.OK);
     }
