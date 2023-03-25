@@ -1,10 +1,10 @@
 package com.example.digimental.services;
 
-import com.example.digimental.dtos.PatientDto;
+import com.example.digimental.dtos.UserDto;
 import com.example.digimental.exceptions.FoundException;
 import com.example.digimental.exceptions.NotFoundException;
-import com.example.digimental.models.Patient;
-import com.example.digimental.repository.PatientRepository;
+import com.example.digimental.models.User;
+import com.example.digimental.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -17,19 +17,19 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PatientService {
+public class UserService{
     @Autowired
-    private  PatientRepository patientRepository;
+    private UserRepository patientRepository;
     @Autowired
    private PasswordEncoder passwordEncoder;
 
 
-    public Patient createPatient(PatientDto patientDto) {
-        Optional<Patient> foundPatient = patientRepository.findByEmail(patientDto.getEmail());
+    public User createPatient(UserDto patientDto) {
+        Optional<User> foundPatient = patientRepository.findByEmail(patientDto.getEmail());
         if (foundPatient.isPresent()) {
             throw new FoundException("patient with provided email already exists");
         }
-        Patient patient = new Patient();
+        User patient = new User();
         patient.setCreatedAt(new Date(System.currentTimeMillis()));
         patient.setUpdatedAt(new Date(System.currentTimeMillis()));
         patient.setPassword(passwordEncoder.encode(patientDto.getPassword()));
@@ -40,20 +40,20 @@ public class PatientService {
     }
 
 
-    public Patient fetchPatientById(String id) {
-        Optional<Patient> patient = patientRepository.findById(id);
+    public User fetchPatientById(String id) {
+        Optional<User> patient = patientRepository.findById(id);
         if (patient.isEmpty()) {
             throw new NotFoundException("patient with email id not found");
         }
         return patient.get();
     }
 
-    public Patient updatePatientById(String id, Patient patient) {
-        Optional<Patient> foundPatient = patientRepository.findById(id);
+    public User updatePatientById(String id, User patient) {
+        Optional<User> foundPatient = patientRepository.findById(id);
         if (foundPatient.isEmpty()) {
             throw new NotFoundException("patient with email id not found");
         }
-        Patient savedPatient = foundPatient.get();
+        User savedPatient = foundPatient.get();
         savedPatient.setUpdatedAt(new Date(System.currentTimeMillis()));
         savedPatient.setGender(patient.getGender() == null ? savedPatient.getGender() : patient.getGender());
         savedPatient.setDob(patient.getDob() == null ? savedPatient.getDob() : patient.getDob());
@@ -63,15 +63,15 @@ public class PatientService {
     }
 
     public void deletePatientById(String id) {
-        Optional<Patient> patient = patientRepository.findById(id);
+        Optional<User> patient = patientRepository.findById(id);
         if (patient.isEmpty()) {
             throw new NotFoundException("patient with email id not found");
         }
         patientRepository.deleteById(id);
     }
 
-    public List<Patient> fetchPaginatedPatients(String pageNumber) {
-        List<Patient> patients = patientRepository.findAll(PageRequest.of(Integer.parseInt(pageNumber), 15).withSort(Sort.by(Sort.Direction.DESC, "createdAt"))).toList();
+    public List<User> fetchPaginatedPatients(String pageNumber) {
+        List<User> patients = patientRepository.findAll(PageRequest.of(Integer.parseInt(pageNumber), 15).withSort(Sort.by(Sort.Direction.DESC, "createdAt"))).toList();
         if (patients.size() == 0) {
             return new ArrayList<>();
         }
