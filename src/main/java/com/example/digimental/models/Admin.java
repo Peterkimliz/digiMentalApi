@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "admin")
-public class admin {
+public class Admin {
     @Id
     private String  id;
     private String email;
