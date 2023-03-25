@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class PatientDto {
-
+public class UserDto {
     @NotBlank(message = "Please enter your email")
     private String email;
     @NotBlank(message = "Please enter your phone")
@@ -19,6 +18,9 @@ public class PatientDto {
     @NotBlank(message = "Please enter your username")
     private String username;
     @NotBlank(message = "Please enter your password")
-    @JsonIgnore
     private String password;
+    @NotBlank(message = "Please enter type")
+    private String type;
+
+
 }
