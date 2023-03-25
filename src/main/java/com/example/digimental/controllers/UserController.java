@@ -12,36 +12,30 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/patient/")
+@RequestMapping("api/user/")
 public class UserController {
     @Autowired
-   private UserService patientService;
-
-    @PostMapping("create")
-    public ResponseEntity<User> createPatient(@RequestBody @Validated UserDto patientDto) {
-        return new ResponseEntity<>(patientService.createPatient(patientDto), HttpStatus.CREATED);
-    }
-
+   private UserService userService;
     @GetMapping("all")
-    public ResponseEntity<List<User>> fetchPaginatedPatients(@RequestParam(required = true) String pageNumber) {
-        List<User> patients = patientService.fetchPaginatedPatients(pageNumber);
-        return new ResponseEntity<>(patients, patients.size() == 0 ? HttpStatus.NOT_FOUND : HttpStatus.OK);
+    public ResponseEntity<List<User>> fetchPaginatedUsers(@RequestParam(required = true) String pageNumber) {
+        List<User> users = userService.fetchPaginatedUsers(pageNumber);
+        return new ResponseEntity<>(users, users.size() == 0 ? HttpStatus.NOT_FOUND : HttpStatus.OK);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<User> getPatientById(@PathVariable("id") String id) {
-        return new ResponseEntity<>(patientService.fetchPatientById(id), HttpStatus.OK);
+    public ResponseEntity<User> getUserById(@PathVariable("id") String id) {
+        return new ResponseEntity<>(userService.fetchUserById(id), HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<String> deletePatientById(@PathVariable("id") String id) {
-        patientService.deletePatientById(id);
-        return new ResponseEntity<>("patient deleted", HttpStatus.OK);
+    public ResponseEntity<String> deleteUserById(@PathVariable("id") String id) {
+        userService.deleteuserById(id);
+        return new ResponseEntity<>("user deleted", HttpStatus.OK);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<User> updatePatientById(@PathVariable("id") String id, @RequestBody User patient) {
+    public ResponseEntity<User> updateUserById(@PathVariable("id") String id, @RequestBody User patient) {
 
-        return new ResponseEntity<>(patientService.updatePatientById(id, patient), HttpStatus.OK);
+        return new ResponseEntity<>(userService.updateUserById(id, patient), HttpStatus.OK);
     }
 }

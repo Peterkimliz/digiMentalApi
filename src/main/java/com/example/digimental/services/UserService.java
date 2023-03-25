@@ -17,65 +17,66 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService{
+public class UserService {
     @Autowired
-    private UserRepository patientRepository;
+    private UserRepository userRepository;
     @Autowired
-   private PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
-
-    public User createPatient(UserDto patientDto) {
-        Optional<User> foundPatient = patientRepository.findByEmail(patientDto.getEmail());
-        if (foundPatient.isPresent()) {
-            throw new FoundException("patient with provided email already exists");
+    public User createUser(UserDto userDto) {
+        Optional<User> foundUser = userRepository.findByEmail(userDto.getEmail());
+        if (foundUser.isPresent()) {
+            throw new FoundException("user with provided email already exists");
         }
-        User patient = new User();
-        patient.setCreatedAt(new Date(System.currentTimeMillis()));
-        patient.setUpdatedAt(new Date(System.currentTimeMillis()));
-        patient.setPassword(passwordEncoder.encode(patientDto.getPassword()));
-        patient.setUsername(patientDto.getUsername());
-        patient.setPhone(patientDto.getPhone());
-        patient.setEmail(patientDto.getEmail());
-        return patientRepository.save(patient);
+        User user = new User();
+        user.setCreatedAt(new Date(System.currentTimeMillis()));
+        user.setUpdatedAt(new Date(System.currentTimeMillis()));
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setUsername(userDto.getUsername());
+        user.setPhone(userDto.getPhone());
+        user.setType(userDto.getType());
+        user.setVerified(userDto.getType().equals("patient"));
+        user.setEmail(userDto.getEmail());
+        return userRepository.save(user);
     }
 
 
-    public User fetchPatientById(String id) {
-        Optional<User> patient = patientRepository.findById(id);
-        if (patient.isEmpty()) {
-            throw new NotFoundException("patient with email id not found");
+    public User fetchUserById(String id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            throw new NotFoundException("user with email id not found");
         }
-        return patient.get();
+        return user.get();
     }
 
-    public User updatePatientById(String id, User patient) {
-        Optional<User> foundPatient = patientRepository.findById(id);
-        if (foundPatient.isEmpty()) {
-            throw new NotFoundException("patient with email id not found");
+    public User updateUserById(String id, User user1) {
+        Optional<User> foundUser = userRepository.findById(id);
+        if (foundUser.isEmpty()) {
+            throw new NotFoundException("user with email id not found");
         }
-        User savedPatient = foundPatient.get();
-        savedPatient.setUpdatedAt(new Date(System.currentTimeMillis()));
-        savedPatient.setGender(patient.getGender() == null ? savedPatient.getGender() : patient.getGender());
-        savedPatient.setDob(patient.getDob() == null ? savedPatient.getDob() : patient.getDob());
-        savedPatient.setPhone(patient.getPhone() == null ? savedPatient.getPhone() : patient.getPhone());
-        savedPatient.setUsername(patient.getUsername() == null ? savedPatient.getUsername() : patient.getUsername());
-        return patientRepository.save(savedPatient);
+        User user = foundUser.get();
+        user.setUpdatedAt(new Date(System.currentTimeMillis()));
+        user.setGender(user1.getGender() == null ? user.getGender() : user1.getGender());
+        user.setDob(user1.getDob() == null ? user.getDob() : user1.getDob());
+        user.setPhone(user1.getPhone() == null ? user.getPhone() : user1.getPhone());
+        user.setUsername(user1.getUsername() == null ? user.getUsername() : user1.getUsername());
+        return userRepository.save(user);
     }
 
-    public void deletePatientById(String id) {
-        Optional<User> patient = patientRepository.findById(id);
-        if (patient.isEmpty()) {
-            throw new NotFoundException("patient with email id not found");
+    public void deleteuserById(String id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            throw new NotFoundException("user with email id not found");
         }
-        patientRepository.deleteById(id);
+        userRepository.deleteById(id);
     }
 
-    public List<User> fetchPaginatedPatients(String pageNumber) {
-        List<User> patients = patientRepository.findAll(PageRequest.of(Integer.parseInt(pageNumber), 15).withSort(Sort.by(Sort.Direction.DESC, "createdAt"))).toList();
-        if (patients.size() == 0) {
+    public List<User> fetchPaginatedUsers(String pageNumber) {
+        List<User> users = userRepository.findAll(PageRequest.of(Integer.parseInt(pageNumber), 15).withSort(Sort.by(Sort.Direction.DESC, "createdAt"))).toList();
+        if (users.size() == 0) {
             return new ArrayList<>();
         }
-        return patients;
+        return users;
     }
 
 }
