@@ -17,7 +17,7 @@ public class WebSecurity {
         httpSecurity
 
                 .authorizeHttpRequests()
-                .requestMatchers("/api/categories/all/**","/api/categories/category/**")
+                .requestMatchers("/api/categories/all/**", "/api/twilio/create/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated();
