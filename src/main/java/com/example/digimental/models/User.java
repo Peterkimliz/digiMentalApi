@@ -25,7 +25,8 @@ public class User {
     private String dob;
     private String gender;
     private String type;
-    private boolean isVerified=false;
+    private boolean isVerified = false;
+    private boolean isPhoneVerified = false;
     private Date createdAt;
     private Date updatedAt;
 

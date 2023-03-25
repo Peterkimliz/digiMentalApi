@@ -1,13 +1,18 @@
 package com.example.digimental.services;
 
+import com.example.digimental.dtos.LoginDto;
+import com.example.digimental.dtos.LoginResponse;
 import com.example.digimental.dtos.UserDto;
 import com.example.digimental.exceptions.FoundException;
 import com.example.digimental.exceptions.NotFoundException;
 import com.example.digimental.models.User;
 import com.example.digimental.repository.UserRepository;
+import com.example.digimental.security.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +27,11 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    JwtService jwtUtils;
+    @Autowired
+    AuthenticationManager authenticationManager;
 
     public User createUser(UserDto userDto) {
         Optional<User> foundUser = userRepository.findByEmail(userDto.getEmail());
@@ -79,4 +89,21 @@ public class UserService {
         return users;
     }
 
+    public LoginResponse loginUser(LoginDto loginDto) {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword())
+            );
+
+        } catch (Exception e) {
+            System.out.println(e);
+            throw new NotFoundException("invalid email or password");
+        }
+        Optional<User> user = userRepository.findByEmail(loginDto.getEmail());
+        String token = jwtUtils.generateToken(loginDto.getEmail());
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setUser(user.get());
+        loginResponse.setToken(token);
+
+        return loginResponse;
+    }
 }
