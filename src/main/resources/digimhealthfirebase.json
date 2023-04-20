@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "digimhealth",
+  "private_key_id": "db29474b8743479715d381b1cd2b0cbbe3a4b268",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCUi9anwhOR8nrV\nopu0GoJNZW9X5DLHupRvmpiZFkWBTaRw+kkxJSdmWREZwiLLAGSdBjaGfmz3bfdz\nt9SFVDA6cUWj3lt9kk7N/Ceop6ve/rxODRVMsqkUWepvpOHIVsFODN3+PCreysmi\nEU25OCXmh+JA8PkE/jCOjdPB3geBFaBP8oeE0cChWEKF8Qx7iVwb1a+9PL9IQnKt\nCPQZwJXjfiU/zXoce4GuLLvxCrkr5RLU4BXmrJ8/GktfhYduto2zmQl83mhZmfCx\nIdRbDeDMQRgiRX7ZHya6fTiiMaPxmZQbSJX8nJUCiTjY908dS3Yc9kRpu/dxtiLz\n7LOOFkMjAgMBAAECggEAFZRE8CTk8+g+SOew59aMBFNOe/2mFNa5docGUQLnwPN3\nBoSNemqz0Q3ySoQlysi5VQhQhnQ6Py2F65USdfX3dZ376GTGdLT65riRSFJnSONH\nlq0W4Yf4wQCY6nQQ6qoTtdNvsl2qOqhJ51XNLTGHa/hkeVuoST3l7ueSkhC/lVRG\nsxo4EO8A9ZnBc4GAMjvdNSf2mILdgkQS+lMw7Zx3gJHqI+LFkO+popyC2l83zgYM\nN1cotC55XcglR0DietgN+DgK2CSrHr21YcVAzPCM4XWW9BiJe8zMg6IiFAAURTZV\nbtErq2cxtRamm+gclU2m7YO5gWFQQHsooV90CONA3QKBgQDNr7lEJfcL9JD8mGdG\nOQ0dvP23YGfmIBcZtPisxkyJ2IbI0OPu1GTIC4REWRUWydYMG3qhUzODbPK9SMAz\nLFMQYfTSeEwOEkk8tlUgWGumIMPRG9NQ9+u8E7SxfG+n2w8lQuLo3uasCEVEFPIj\nhuQUzdaTj2xGY2PZX9ZgWATHFQKBgQC44fGEkrVi3+36ngOlHL6YO+/Jj/ncZL+w\ngo139e9byD4Z7YXrm2mmY4En6QCIftx0VANt2DX92IpYSTzcBHmY+w61XatP9Ju1\nIvEYkj2Bq8JRdAimXJ2G5owkZ/7T+YmtGoB4yZPWmsWSJcHMndv6wxfrVZOw9DNq\nWxDsOrLvVwKBgAWQhHWYhVd4dVewE9MthfJRA5grboQmSBm08KlT8AwmpHbYV+JF\nMrjKvvhOZKiqKzVGpQmqQ5GBqAuA5Vo9D744uDPdd0lGK18OG711RuxGpKWKmCvv\nmRwMeG34zNiAr6c1aQgdx6XNz3npCyf05US+0NhLIAXDeJcP5a/TkcWFAoGBALCT\n03k8KZN6ri8btf1/m6WIMTfAk/JkIxSxS+5T7L0rXeyjh7GEKH6rMJLunfy/tUxB\nZVkHFGIS6+bwY/j7KSvsNJsSEGl4BTMWYVCHc8kiQ6BKA2zoredG0HiA/shz34N9\n+U/jrphcD/DKsPL9njk9Fd5FSJ7MTUL6IQqN8ZJXAoGALJoZ6CZiSnmtthIf2kvt\nKuH9oBbhKewH1pfB6W2sBqo8qNHY8zlI5dXj5Wzddex+md9g41sl5mbTM9KBFdnc\n7l1ruOoYsHKw5DV0VFzE/Xi/vd5J3TJkdDJ6HCMMZMdCgDAXEOWWh6hL/JnKhK1y\nW7zMI4+/Nr+LJUCwFbmGeEc=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-wcle8@digimhealth.iam.gserviceaccount.com",
+  "client_id": "117888571927467742559",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-wcle8%40digimhealth.iam.gserviceaccount.com"
+}

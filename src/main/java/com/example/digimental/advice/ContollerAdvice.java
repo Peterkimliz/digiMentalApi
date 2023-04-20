@@ -32,6 +32,7 @@ public class ContollerAdvice {
 
     @ExceptionHandler(FoundException.class)
     public ResponseEntity<ExceptionObject> FoundException(FoundException exception){
+
         ExceptionObject exceptionObject=new ExceptionObject();
         exceptionObject.setMessage(exception.getMessage());
         return new ResponseEntity<>(exceptionObject, HttpStatus.CONFLICT);
