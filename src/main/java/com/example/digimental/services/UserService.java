@@ -8,6 +8,12 @@ import com.example.digimental.exceptions.NotFoundException;
 import com.example.digimental.models.User;
 import com.example.digimental.repository.UserRepository;
 import com.example.digimental.security.JwtService;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.WriteResult;
+import com.google.firebase.cloud.FirestoreClient;
+import com.google.protobuf.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -27,7 +33,6 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
-
     @Autowired
     JwtService jwtUtils;
     @Autowired
@@ -35,6 +40,7 @@ public class UserService {
 
     public User createUser(UserDto userDto) {
         Optional<User> foundUser = userRepository.findByEmail(userDto.getEmail());
+
         if (foundUser.isPresent()) {
             throw new FoundException("user with provided email already exists");
         }
@@ -47,6 +53,8 @@ public class UserService {
         user.setType(userDto.getType());
         user.setVerified(userDto.getType().equals("patient"));
         user.setEmail(userDto.getEmail());
+        createUserToFirebase(user);
+
         return userRepository.save(user);
     }
 
@@ -106,4 +114,15 @@ public class UserService {
 
         return loginResponse;
     }
+
+
+    public void createUserToFirebase(User user){
+        Firestore firestore= FirestoreClient.getFirestore();
+        DocumentReference documentReference=firestore.collection("users").document();
+        user.setId(documentReference.getId());
+        ApiFuture<WriteResult> apiFuture=documentReference.set(user);
+        System.out.println(apiFuture);
+
+    }
+
 }
