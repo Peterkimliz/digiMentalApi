@@ -29,6 +29,7 @@ import java.util.Optional;
 
 @Service
 public class UserService {
+    Firestore firestore= FirestoreClient.getFirestore();
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -82,7 +83,9 @@ public class UserService {
         user.setAge(user1.getAge() == null ? user.getAge() : user1.getAge());
         user.setProfileImage(user1.getProfileImage() == null ? user.getProfileImage() : user1.getProfileImage());
         user.setUsername(user1.getUsername() == null ? user.getUsername() : user1.getUsername());
-        return userRepository.save(user);
+        User updateduser= userRepository.save(user);
+        ApiFuture<WriteResult> apiFuture=firestore.collection("users").document(updateduser.getId()).set(updateduser);
+         return  updateduser;
     }
 
     public void deleteuserById(String id) {
@@ -121,7 +124,6 @@ public class UserService {
 
 
     public void createUserToFirebase(User user){
-        Firestore firestore= FirestoreClient.getFirestore();
         DocumentReference documentReference=firestore.collection("users").document();
         user.setId(documentReference.getId());
         ApiFuture<WriteResult> apiFuture=documentReference.set(user);
