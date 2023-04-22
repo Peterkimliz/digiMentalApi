@@ -27,8 +27,10 @@ public class User implements UserDetails {
     private String phone;
     @JsonIgnore
     private String password;
-    private String dob;
+    private Date dob;
     private String gender;
+    private String age;
+    private String profileImage;
     private String type;
     private boolean isVerified = false;
     private boolean isPhoneVerified = false;

@@ -79,6 +79,8 @@ public class UserService {
         user.setGender(user1.getGender() == null ? user.getGender() : user1.getGender());
         user.setDob(user1.getDob() == null ? user.getDob() : user1.getDob());
         user.setPhone(user1.getPhone() == null ? user.getPhone() : user1.getPhone());
+        user.setAge(user1.getAge() == null ? user.getAge() : user1.getAge());
+        user.setProfileImage(user1.getProfileImage() == null ? user.getProfileImage() : user1.getProfileImage());
         user.setUsername(user1.getUsername() == null ? user.getUsername() : user1.getUsername());
         return userRepository.save(user);
     }
