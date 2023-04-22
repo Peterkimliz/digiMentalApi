@@ -30,6 +30,8 @@ import java.util.Optional;
 @Service
 public class UserService {
     @Autowired
+    JwtService jwtService;
+    @Autowired
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -38,7 +40,7 @@ public class UserService {
     @Autowired
     AuthenticationManager authenticationManager;
 
-    public User createUser(UserDto userDto) {
+    public LoginResponse createUser(UserDto userDto) {
         Optional<User> foundUser = userRepository.findByEmail(userDto.getEmail());
 
         if (foundUser.isPresent()) {
@@ -55,7 +57,10 @@ public class UserService {
         user.setEmail(userDto.getEmail());
         createUserToFirebase(user);
 
-        return userRepository.save(user);
+       String token= jwtService.generateToken(user.getEmail());
+       userRepository.save(user);
+       LoginResponse loginResponse=new LoginResponse(user,token);
+       return loginResponse;
     }
 
 

@@ -18,7 +18,7 @@ public class AuthController {
     @Autowired
     private UserService userService;
     @PostMapping("create")
-    public ResponseEntity<User> createuser(@RequestBody  @Validated  UserDto userDto) {
+    public ResponseEntity<LoginResponse> createuser(@RequestBody  @Validated  UserDto userDto) {
         System.out.println("called");
         return new ResponseEntity<>(userService.createUser(userDto), HttpStatus.CREATED);
     }
