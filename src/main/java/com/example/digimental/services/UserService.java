@@ -29,7 +29,7 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    Firestore firestore= FirestoreClient.getFirestore();
+
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -71,6 +71,7 @@ public class UserService {
     }
 
     public User updateUserById(String id, User user1) {
+        Firestore firestore= FirestoreClient.getFirestore();
         Optional<User> foundUser = userRepository.findById(id);
         if (foundUser.isEmpty()) {
             throw new NotFoundException("user with email id not found");
@@ -124,6 +125,7 @@ public class UserService {
 
 
     public void createUserToFirebase(User user){
+        Firestore firestore= FirestoreClient.getFirestore();
         DocumentReference documentReference=firestore.collection("users").document();
         user.setId(documentReference.getId());
         ApiFuture<WriteResult> apiFuture=documentReference.set(user);
