@@ -30,8 +30,6 @@ import java.util.Optional;
 @Service
 public class UserService {
     @Autowired
-    JwtService jwtService;
-    @Autowired
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -57,10 +55,9 @@ public class UserService {
         user.setEmail(userDto.getEmail());
         createUserToFirebase(user);
 
-       String token= jwtService.generateToken(user.getEmail());
+        String token = jwtUtils.generateToken(user.getEmail());
        userRepository.save(user);
-       LoginResponse loginResponse=new LoginResponse(user,token);
-       return loginResponse;
+        return new LoginResponse(user,token);
     }
 
 
