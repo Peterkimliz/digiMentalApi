@@ -6,7 +6,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +31,7 @@ public class JwtService {
     ///method to extract all claims
     public Claims extractAllClaims(String token) {
         return Jwts.parser()
-                .setSigningKey(Base64.getEncoder().encodeToString(SECRET_KEY.getBytes()))
+                .setSigningKey(SECRET_KEY)
                 .parseClaimsJws(token)
                 .getBody();
     }
