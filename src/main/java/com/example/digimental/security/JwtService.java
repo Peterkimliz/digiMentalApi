@@ -25,6 +25,7 @@ public class JwtService {
     //method to get specific claims
     public <T> T extractCliam(String token, Function<Claims, T> claimsResolver) {
         Claims claims = extractAllClaims(token);
+        System.out.println("claims are"+claims+"\n\n\n");
         return claimsResolver.apply(claims);
     }
 
@@ -42,6 +43,7 @@ public class JwtService {
     }
 
     public String generateToken(Map<String, Object> claims, String username) {
+        System.out.println("username is"+username+"\n\n\n");
       
           return Jwts.builder()
                 .setClaims(claims)
