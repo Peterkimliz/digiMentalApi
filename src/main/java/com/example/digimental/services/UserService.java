@@ -54,7 +54,7 @@ public class UserService {
         user.setUsername(userDto.getUsername());
         user.setPhone(userDto.getPhone());
         user.setType(userDto.getType());
-        user.setVerified(userDto.getType().equals("patient"));
+        user.setIsVerified(userDto.getType().equals("patient"));
         user.setEmail(userDto.getEmail());
         createUserToFirebase(user);
 
@@ -101,13 +101,12 @@ public class UserService {
     }
 
 
-
     public User uploadDoctorDetailsUserById(String id, UpdateUserDto updateUserDto) {
-       User user= updateUserById(id, updateUserDto);
+        User user = updateUserById(id, updateUserDto);
         if (updateUserDto.getMailSend()) {
             emailService.sendEmail(user.getEmail(), "peterkironji8@gmail.com", "Please Validate My Account", "Account Verification");
         }
-        return  user;
+        return user;
     }
 
     public void deleteuserById(String id) {
@@ -154,9 +153,13 @@ public class UserService {
     }
 
 
-    public void verifyDoctor(String uid){
-        User user=fetchUserById(uid);
-        user.setVerified(true);
+    public void verifyDoctor(String uid) {
+        User user = fetchUserById(uid);
+        if (!user.getIsVerified()) {
+            user.setIsVerified(true);
+            emailService.sendEmail("digimhealth@gmail.com", user.getEmail(), "Your Account has been verified", "Account Verification");
+        }
+
         userRepository.save(user);
     }
 

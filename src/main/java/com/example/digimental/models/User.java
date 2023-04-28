@@ -33,7 +33,7 @@ public class User implements UserDetails {
     private String age;
     private String profileImage;
     private String type;
-    private boolean isVerified = false;
+    private Boolean isVerified = false;
     private String bio;
     private String country;
     private String county;
@@ -45,7 +45,7 @@ public class User implements UserDetails {
     private String certurl;
     private  List<String>category=new ArrayList<>();
     private  List<String>workingDays=new ArrayList<>();
-    private boolean isPhoneVerified = false;
+    private Boolean isPhoneVerified = false;
     private Date createdAt;
     private Date updatedAt;
      Role role;
