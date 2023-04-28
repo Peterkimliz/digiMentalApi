@@ -2,6 +2,7 @@ package com.example.digimental.services;
 
 import com.example.digimental.dtos.LoginDto;
 import com.example.digimental.dtos.LoginResponse;
+import com.example.digimental.dtos.UpdateUserDto;
 import com.example.digimental.dtos.UserDto;
 import com.example.digimental.exceptions.FoundException;
 import com.example.digimental.exceptions.NotFoundException;
@@ -13,7 +14,6 @@ import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
-import com.google.protobuf.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -70,7 +70,7 @@ public class UserService {
         return user.get();
     }
 
-    public User updateUserById(String id, User user1) {
+    public User updateUserById(String id, UpdateUserDto updateUserDto) {
         Firestore firestore= FirestoreClient.getFirestore();
         Optional<User> foundUser = userRepository.findById(id);
         if (foundUser.isEmpty()) {
@@ -78,12 +78,21 @@ public class UserService {
         }
         User user = foundUser.get();
         user.setUpdatedAt(new Date(System.currentTimeMillis()));
-        user.setGender(user1.getGender() == null ? user.getGender() : user1.getGender());
-        user.setDob(user1.getDob() == null ? user.getDob() : user1.getDob());
-        user.setPhone(user1.getPhone() == null ? user.getPhone() : user1.getPhone());
-        user.setAge(user1.getAge() == null ? user.getAge() : user1.getAge());
-        user.setProfileImage(user1.getProfileImage() == null ? user.getProfileImage() : user1.getProfileImage());
-        user.setUsername(user1.getUsername() == null ? user.getUsername() : user1.getUsername());
+        user.setGender(updateUserDto.getGender() == null ? user.getGender() : updateUserDto.getGender());
+        user.setDob(updateUserDto.getDob() == null ? user.getDob() : updateUserDto.getDob());
+        user.setPhone(updateUserDto.getPhone() == null ? user.getPhone() : updateUserDto.getPhone());
+        user.setAge(updateUserDto.getAge() == null ? user.getAge() : updateUserDto.getAge());
+        user.setProfileImage(updateUserDto.getProfileImage() == null ? user.getProfileImage() : updateUserDto.getProfileImage());
+        user.setUsername(updateUserDto.getUsername() == null ? user.getUsername() : updateUserDto.getUsername());
+        user.setBio(updateUserDto.getBio()==null?user.getBio(): updateUserDto.getBio());
+        user.setCategory(updateUserDto.getCategory()==null?user.getCategory(): updateUserDto.getCategory());
+        user.setCerturl(updateUserDto.getCerturl()==null?user.getCerturl(): updateUserDto.getCerturl());
+        user.setConsultationFee(updateUserDto.getConsultationFee() ==null?user.getConsultationFee(): Integer.parseInt(updateUserDto.getConsultationFee()));
+        user.setYearsOfExperience(updateUserDto.getYearsOfExperience() ==null?user.getYearsOfExperience(): Integer.parseInt(updateUserDto.getYearsOfExperience()));
+        user.setCountry(updateUserDto.getCountry()==null?user.getCountry(): updateUserDto.getCountry());
+        user.setCounty(updateUserDto.getCounty()==null?user.getCounty(): updateUserDto.getCounty());
+        user.setSubcounty(updateUserDto.getSubcounty()==null?user.getSubcounty(): updateUserDto.getSubcounty());
+        user.setWorkingDays(updateUserDto.getWorkingDays()==null?user.getWorkingDays(): updateUserDto.getWorkingDays());
         User updateduser= userRepository.save(user);
         ApiFuture<WriteResult> apiFuture=firestore.collection("users").document(updateduser.getId()).set(updateduser);
          return  updateduser;

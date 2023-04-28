@@ -1,12 +1,11 @@
 package com.example.digimental.controllers;
 
-import com.example.digimental.dtos.UserDto;
+import com.example.digimental.dtos.UpdateUserDto;
 import com.example.digimental.models.User;
 import com.example.digimental.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,8 +33,8 @@ public class UserController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<User> updateUserById(@PathVariable("id") String id, @RequestBody User patient) {
+    public ResponseEntity<User> updateUserById(@PathVariable("id") String id, @RequestBody UpdateUserDto updateUserDto) {
 
-        return new ResponseEntity<>(userService.updateUserById(id, patient), HttpStatus.OK);
+        return new ResponseEntity<>(userService.updateUserById(id, updateUserDto), HttpStatus.OK);
     }
 }
