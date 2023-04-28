@@ -40,6 +40,8 @@ public class User implements UserDetails {
     private String subcounty;
     private int yearsOfExperience;
     private int consultationFee;
+    private int totalReviews;
+    private  int totalRatings;
     private String certurl;
     private  List<String>category=new ArrayList<>();
     private  List<String>workingDays=new ArrayList<>();
