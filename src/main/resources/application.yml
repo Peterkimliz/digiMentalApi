@@ -7,9 +7,9 @@ spring:
     properties:
       mail:
         smtp:
-          auth: true
           starttls:
             enabled: true
+            auth: true
   data:
     mongodb:
             uri: mongodb+srv://peterkimani:kimani89@cluster0.l6ma0.mongodb.net/?retryWrites=true&w=majority
