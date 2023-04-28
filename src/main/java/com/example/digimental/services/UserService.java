@@ -104,9 +104,9 @@ public class UserService {
 
     public User uploadDoctorDetailsUserById(String id, UpdateUserDto updateUserDto) {
        User user= updateUserById(id, updateUserDto);
-//        if (updateUserDto.getMailSend()!=null&& updateUserDto.getMailSend()) {
-//            emailService.sendEmail(user.getEmail(), "peterkironji8@gmail.com", "Please Validate My Account", "Account Verification");
-//        }
+        if (updateUserDto.getMailSend()) {
+            emailService.sendEmail(user.getEmail(), "peterkironji8@gmail.com", "Please Validate My Account", "Account Verification");
+        }
         return  user;
     }
 
