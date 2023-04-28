@@ -11,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +34,15 @@ public class User implements UserDetails {
     private String profileImage;
     private String type;
     private boolean isVerified = false;
+    private String bio;
+    private String country;
+    private String county;
+    private String subcounty;
+    private int yearsOfExperience;
+    private int consultationFee;
+    private String certurl;
+    private  List<String>category=new ArrayList<>();
+    private  List<String>workingDays=new ArrayList<>();
     private boolean isPhoneVerified = false;
     private Date createdAt;
     private Date updatedAt;
