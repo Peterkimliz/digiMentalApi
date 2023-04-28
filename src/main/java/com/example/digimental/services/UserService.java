@@ -151,7 +151,13 @@ public class UserService {
         user.setId(documentReference.getId());
         ApiFuture<WriteResult> apiFuture = documentReference.set(user);
         System.out.println(apiFuture);
+    }
 
+
+    public void verifyDoctor(String uid){
+        User user=fetchUserById(uid);
+        user.setVerified(true);
+        userRepository.save(user);
     }
 
 }

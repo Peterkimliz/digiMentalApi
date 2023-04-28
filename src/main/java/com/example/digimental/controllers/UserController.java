@@ -42,4 +42,9 @@ public class UserController {
 
         return new ResponseEntity<>(userService.uploadDoctorDetailsUserById(id, updateUserDto), HttpStatus.OK);
     }
+    @PutMapping("doctors/verify/{id}")
+    public ResponseEntity<String> verifyDoctorDetails(@PathVariable("id") String id) {
+        userService.verifyDoctor(id);
+        return new ResponseEntity<>("user verified", HttpStatus.OK);
+    }
 }
