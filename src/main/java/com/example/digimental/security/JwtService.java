@@ -6,6 +6,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +15,7 @@ import java.util.function.Function;
 
 @Component
 public class JwtService {
-    private String SECRET_KEY = "eyJzdWIiOiJwZXRlcmtpcm9uamk4QGdtYWlsLmNvbSIsImV4cCI6MTY4MjY4MDAwOCwiaWF0IjoxNjgyNjc4NTY4fQ";
+    private final String SECRET_KEY = "eyJzdWIiOiJwZXRlcmtpcm9uamk4QGdtYWlsLmNvbSIsImV4cCI6MTY4MjY4MDAwOCwiaWF0IjoxNjgyNjc4NTY4fQ";
 
     //method to extract name from token
     public String extractUsername(String token) {
@@ -31,7 +32,7 @@ public class JwtService {
     ///method to extract all claims
     public Claims extractAllClaims(String token) {
         return Jwts.parser()
-                .setSigningKey(SECRET_KEY)
+                .setSigningKey(Base64.getEncoder().encodeToString(SECRET_KEY.getBytes()))
                 .parseClaimsJws(token)
                 .getBody();
     }
