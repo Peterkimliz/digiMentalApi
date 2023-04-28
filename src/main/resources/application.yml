@@ -1,15 +1,4 @@
 spring:
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: peterkironji8@gmail.com
-    password: akjbhxzafcjudbjr
-    properties:
-      mail:
-        smtp:
-          starttls:
-            enabled: true
-            auth: true
   data:
     mongodb:
             uri: mongodb+srv://peterkimani:kimani89@cluster0.l6ma0.mongodb.net/?retryWrites=true&w=majority
