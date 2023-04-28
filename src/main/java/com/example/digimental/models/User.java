@@ -38,10 +38,10 @@ public class User implements UserDetails {
     private String country;
     private String county;
     private String subcounty;
-    private int yearsOfExperience;
-    private int consultationFee;
-    private int totalReviews;
-    private  int totalRatings;
+    private int yearsOfExperience=0;
+    private int consultationFee=0;
+    private int totalReviews=0;
+    private  int totalRatings=0;
     private String certurl;
     private  List<String>category=new ArrayList<>();
     private  List<String>workingDays=new ArrayList<>();
