@@ -1,4 +1,15 @@
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: peterkironji8@gmail.com
+    password: akjbhxzafcjudbjr
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enabled: true
   data:
     mongodb:
             uri: mongodb+srv://peterkimani:kimani89@cluster0.l6ma0.mongodb.net/?retryWrites=true&w=majority
@@ -9,3 +20,4 @@ twilio:
   account_sid: ACe464d31625b5124ac25b53e3f9870ab0
   auth_token: be47a2ea7e2a44487385e582d7386984
   trial_number: +254795388105
+

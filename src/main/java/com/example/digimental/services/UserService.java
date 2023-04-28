@@ -29,6 +29,8 @@ import java.util.Optional;
 
 @Service
 public class UserService {
+    @Autowired
+    EmailService emailService;
 
     @Autowired
     private UserRepository userRepository;
@@ -57,8 +59,8 @@ public class UserService {
         createUserToFirebase(user);
 
         String token = jwtUtils.generateToken(user.getEmail());
-       userRepository.save(user);
-        return new LoginResponse(user,token);
+        userRepository.save(user);
+        return new LoginResponse(user, token);
     }
 
 
@@ -71,7 +73,7 @@ public class UserService {
     }
 
     public User updateUserById(String id, UpdateUserDto updateUserDto) {
-        Firestore firestore= FirestoreClient.getFirestore();
+        Firestore firestore = FirestoreClient.getFirestore();
         Optional<User> foundUser = userRepository.findById(id);
         if (foundUser.isEmpty()) {
             throw new NotFoundException("user with email id not found");
@@ -84,18 +86,28 @@ public class UserService {
         user.setAge(updateUserDto.getAge() == null ? user.getAge() : updateUserDto.getAge());
         user.setProfileImage(updateUserDto.getProfileImage() == null ? user.getProfileImage() : updateUserDto.getProfileImage());
         user.setUsername(updateUserDto.getUsername() == null ? user.getUsername() : updateUserDto.getUsername());
-        user.setBio(updateUserDto.getBio()==null?user.getBio(): updateUserDto.getBio());
-        user.setCategory(updateUserDto.getCategory()==null?user.getCategory(): updateUserDto.getCategory());
-        user.setCerturl(updateUserDto.getCerturl()==null?user.getCerturl(): updateUserDto.getCerturl());
-        user.setConsultationFee(updateUserDto.getConsultationFee() ==null?user.getConsultationFee(): Integer.parseInt(updateUserDto.getConsultationFee()));
-        user.setYearsOfExperience(updateUserDto.getYearsOfExperience() ==null?user.getYearsOfExperience(): Integer.parseInt(updateUserDto.getYearsOfExperience()));
-        user.setCountry(updateUserDto.getCountry()==null?user.getCountry(): updateUserDto.getCountry());
-        user.setCounty(updateUserDto.getCounty()==null?user.getCounty(): updateUserDto.getCounty());
-        user.setSubcounty(updateUserDto.getSubcounty()==null?user.getSubcounty(): updateUserDto.getSubcounty());
-        user.setWorkingDays(updateUserDto.getWorkingDays()==null?user.getWorkingDays(): updateUserDto.getWorkingDays());
-        User updateduser= userRepository.save(user);
-        ApiFuture<WriteResult> apiFuture=firestore.collection("users").document(updateduser.getId()).set(updateduser);
-         return  updateduser;
+        user.setBio(updateUserDto.getBio() == null ? user.getBio() : updateUserDto.getBio());
+        user.setCategory(updateUserDto.getCategory() == null ? user.getCategory() : updateUserDto.getCategory());
+        user.setCerturl(updateUserDto.getCerturl() == null ? user.getCerturl() : updateUserDto.getCerturl());
+        user.setConsultationFee(updateUserDto.getConsultationFee() == null ? user.getConsultationFee() : Integer.parseInt(updateUserDto.getConsultationFee()));
+        user.setYearsOfExperience(updateUserDto.getYearsOfExperience() == null ? user.getYearsOfExperience() : Integer.parseInt(updateUserDto.getYearsOfExperience()));
+        user.setCountry(updateUserDto.getCountry() == null ? user.getCountry() : updateUserDto.getCountry());
+        user.setCounty(updateUserDto.getCounty() == null ? user.getCounty() : updateUserDto.getCounty());
+        user.setSubcounty(updateUserDto.getSubcounty() == null ? user.getSubcounty() : updateUserDto.getSubcounty());
+        user.setWorkingDays(updateUserDto.getWorkingDays() == null ? user.getWorkingDays() : updateUserDto.getWorkingDays());
+        User updateduser = userRepository.save(user);
+        ApiFuture<WriteResult> apiFuture = firestore.collection("users").document(updateduser.getId()).set(updateduser);
+        return updateduser;
+    }
+
+
+
+    public User uploadDoctorDetailsUserById(String id, UpdateUserDto updateUserDto) {
+       User user= updateUserById(id, updateUserDto);
+        if (updateUserDto.getMailSend()!=null&& updateUserDto.getMailSend()) {
+            emailService.sendEmail(user.getEmail(), "peterkironji8@gmail.com", "Please Validate My Account", "Account Verification");
+        }
+        return  user;
     }
 
     public void deleteuserById(String id) {
@@ -133,11 +145,11 @@ public class UserService {
     }
 
 
-    public void createUserToFirebase(User user){
-        Firestore firestore= FirestoreClient.getFirestore();
-        DocumentReference documentReference=firestore.collection("users").document();
+    public void createUserToFirebase(User user) {
+        Firestore firestore = FirestoreClient.getFirestore();
+        DocumentReference documentReference = firestore.collection("users").document();
         user.setId(documentReference.getId());
-        ApiFuture<WriteResult> apiFuture=documentReference.set(user);
+        ApiFuture<WriteResult> apiFuture = documentReference.set(user);
         System.out.println(apiFuture);
 
     }

@@ -11,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateUserDto {
+    private  Boolean mailSend;
     private String username;
     private String phone;
     private String dob;
