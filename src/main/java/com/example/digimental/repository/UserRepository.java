@@ -13,8 +13,8 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends MongoRepository<User,String> {
     Optional<User> findByEmail(String email);
-    Page<User> findByCategoryAndTypeAndIsVerified(List<String> category, String type,boolean isVerified,Pageable pageable);
     Page<User> findByCategoryContainsAndTypeAndIsVerified(List<String> category, String type, Boolean isVerified, Pageable pageable);
+    Page<User> findByCategoryContainsAndTypeAndIsVerifiedAndUsernameStartingWith(List<String> category, String type, Boolean isVerified,String name ,Pageable pageable);
     Page<User> findByTypeAndIsVerified(String doctor, boolean isVerified, Pageable paging);
-    Page<User> findByTypeAndIsVerifiedAndUsernameStartingWith(String doctor, boolean isVerified, String name,Pageable paging);
+    Page<User> findByTypeAndIsVerifiedAndUsernameStartingWith(String type, boolean isVerified, String name,Pageable paging);
 }
