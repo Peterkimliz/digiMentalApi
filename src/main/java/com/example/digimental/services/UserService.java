@@ -142,23 +142,23 @@ public class UserService {
         return loginResponse;
     }
 
-    public  List<User> searchusersByCategory(String category, int pageNumber){
-        if (category.equals("all")){
-            return  findAllPaginateDoctors(pageNumber);
-        }else{
-            Pageable paging =  PageRequest.of(pageNumber, 15).withSort(Sort.Direction.DESC,"createdAt");
-            List <String> categories=new ArrayList<>();
+    public List<User> searchusersByCategory(String category, int pageNumber, String name) {
+        if (category.equals("all")) {
+            return findAllPaginateDoctors(pageNumber, name);
+        } else {
+            Pageable paging = PageRequest.of(pageNumber, 15).withSort(Sort.Direction.DESC, "createdAt");
+            List<String> categories = new ArrayList<>();
             categories.add(category);
-            Page<User>  users =userRepository.findByCategoryAndTypeAndIsVerified(categories,"doctor",true,paging);
-            return  users.toList();
+            Page<User> users = userRepository.findByCategoryAndTypeAndIsVerified(categories, "doctor", true, paging);
+            return users.toList();
         }
 
     }
 
-    private List<User> findAllPaginateDoctors(int pageNumber){
-        Pageable paging =  PageRequest.of(pageNumber, 15).withSort(Sort.Direction.DESC,"createdAt");
-        Page<User>  users= userRepository.findByTypeAndIsVerified("doctor",true,paging);
-        return  users.toList();
+    private List<User> findAllPaginateDoctors(int pageNumber, String name) {
+        Pageable paging = PageRequest.of(pageNumber, 15).withSort(Sort.Direction.DESC, "createdAt");
+        Page<User> users = name != null ? userRepository.findByTypeAndIsVerifiedAndUsernameStartingWith("doctor", true, name, paging) : userRepository.findByTypeAndIsVerified("doctor", true, paging);
+        return users.toList();
     }
 
 

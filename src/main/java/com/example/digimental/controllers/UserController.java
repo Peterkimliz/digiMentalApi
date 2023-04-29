@@ -14,7 +14,8 @@ import java.util.List;
 @RequestMapping("/api/user/")
 public class UserController {
     @Autowired
-   private UserService userService;
+    private UserService userService;
+
     @GetMapping("all")
     public ResponseEntity<List<User>> fetchPaginatedUsers(@RequestParam(required = true) String pageNumber) {
         List<User> users = userService.fetchPaginatedUsers(pageNumber);
@@ -25,10 +26,11 @@ public class UserController {
     public ResponseEntity<User> getUserById(@PathVariable("id") String id) {
         return new ResponseEntity<>(userService.fetchUserById(id), HttpStatus.OK);
     }
+
     @GetMapping("doctors/search")
-    public ResponseEntity<List<User>> searchByCategory(@RequestParam(required = true) String category,@RequestParam(required =true) int pageNumber) {
-        List<User> users=userService.searchusersByCategory(category,pageNumber);
-        return new ResponseEntity<>(users,users.size()>0? HttpStatus.OK:HttpStatus.NOT_FOUND);
+    public ResponseEntity<List<User>> searchByCategory(@RequestParam(required = true) String category, @RequestParam(required = true) int pageNumber, @RequestParam(required = false) String name) {
+        List<User> users = userService.searchusersByCategory(category, pageNumber, name);
+        return new ResponseEntity<>(users, users.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("{id}")
@@ -42,11 +44,13 @@ public class UserController {
 
         return new ResponseEntity<>(userService.updateUserById(id, updateUserDto), HttpStatus.OK);
     }
+
     @PutMapping("doctors/update/{id}")
     public ResponseEntity<User> uploadDoctorDetails(@PathVariable("id") String id, @RequestBody UpdateUserDto updateUserDto) {
 
         return new ResponseEntity<>(userService.uploadDoctorDetailsUserById(id, updateUserDto), HttpStatus.OK);
     }
+
     @PutMapping("doctors/verify/{id}")
     public ResponseEntity<String> verifyDoctorDetails(@PathVariable("id") String id) {
         userService.verifyDoctor(id);
