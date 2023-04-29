@@ -11,25 +11,25 @@ import org.springframework.stereotype.Service;
 
 public class NotificationService {
 
-//    @Autowired
-//    FirebaseMessaging firebaseMessaging;
-//
-//    public String sendNotification(Notification note, String token) throws FirebaseMessagingException {
-//
-//        com.google.firebase.messaging.Notification notification = com.google.firebase.messaging.Notification
-//                .builder()
-//                .setTitle(note.getSubject())
-//                .setBody(note.getContent())
-//                .build();
-//
-//        Message message = Message
-//                .builder()
-//                .setToken(token)
-//                .setNotification(notification)
-//                .putAllData(note.getData())
-//                .build();
-//
-//        return firebaseMessaging.send(message);
-//    }
+    @Autowired
+    FirebaseMessaging firebaseMessaging;
+
+    public String sendNotification(Notification note, String token) throws FirebaseMessagingException {
+
+        com.google.firebase.messaging.Notification notification = com.google.firebase.messaging.Notification
+                .builder()
+                .setTitle(note.getSubject())
+                .setBody(note.getContent())
+                .build();
+
+        Message message = Message
+                .builder()
+                .setToken(token)
+                .setNotification(notification)
+                .putAllData(note.getData())
+                .build();
+
+        return firebaseMessaging.send(message);
+    }
 
 }
