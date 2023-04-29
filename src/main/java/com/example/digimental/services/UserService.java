@@ -15,17 +15,16 @@ import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -141,6 +140,25 @@ public class UserService {
         loginResponse.setToken(token);
 
         return loginResponse;
+    }
+
+    public  List<User> searchusersByCategory(String category, int pageNumber){
+        if (category.equals("all")){
+            return  findAllPaginateDoctors(pageNumber);
+        }else{
+            Pageable paging =  PageRequest.of(pageNumber, 15).withSort(Sort.Direction.DESC,"createdAt");
+            List <String> categories=new ArrayList<>();
+            categories.add(category);
+            Page<User>  users =userRepository.findByCategoryAndType(categories,"doctor",paging);
+            return  users.toList();
+        }
+
+    }
+
+    private List<User> findAllPaginateDoctors(int pageNumber){
+        Pageable paging =  PageRequest.of(pageNumber, 15).withSort(Sort.Direction.DESC,"createdAt");
+        Page<User>  users= userRepository.findByType("doctor",paging);
+        return  users.toList();
     }
 
 

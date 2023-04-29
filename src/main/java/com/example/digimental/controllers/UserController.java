@@ -25,6 +25,11 @@ public class UserController {
     public ResponseEntity<User> getUserById(@PathVariable("id") String id) {
         return new ResponseEntity<>(userService.fetchUserById(id), HttpStatus.OK);
     }
+    @GetMapping("doctors/search")
+    public ResponseEntity<List<User>> searchByCategory(@RequestParam(required = true) String category,@RequestParam(required =true) int pageNumber) {
+        List<User> users=userService.searchusersByCategory(category,pageNumber);
+        return new ResponseEntity<>(users,users.size()>0? HttpStatus.OK:HttpStatus.NOT_FOUND);
+    }
 
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteUserById(@PathVariable("id") String id) {
