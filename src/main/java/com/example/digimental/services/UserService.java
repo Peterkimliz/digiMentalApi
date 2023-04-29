@@ -149,7 +149,7 @@ public class UserService {
             Pageable paging = PageRequest.of(pageNumber, 15).withSort(Sort.Direction.DESC, "createdAt");
             List<String> categories = new ArrayList<>();
             categories.add(category);
-            Page<User> users = userRepository.findByCategoryAndTypeAndIsVerified(categories, "doctor", true, paging);
+            Page<User> users = userRepository.findByCategoryContainsAndTypeAndIsVerified(categories, "doctor", true, paging);
             return users.toList();
         }
 
