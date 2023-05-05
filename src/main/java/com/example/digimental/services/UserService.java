@@ -55,6 +55,7 @@ public class UserService {
         user.setType(userDto.getType());
         user.setIsVerified(userDto.getType().equals("patient"));
         user.setEmail(userDto.getEmail());
+        user.setFcmToken(userDto.getFcmToken());
         createUserToFirebase(user);
 
         String token = jwtUtils.generateToken(user.getEmail());

@@ -46,6 +46,8 @@ public class User implements UserDetails {
     private  List<String>category=new ArrayList<>();
     private  List<String>workingDays=new ArrayList<>();
     private Boolean isPhoneVerified = false;
+
+    private String fcmToken;
     private Date createdAt;
     private Date updatedAt;
      Role role;

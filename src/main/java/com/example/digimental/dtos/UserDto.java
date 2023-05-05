@@ -21,6 +21,8 @@ public class UserDto {
     private String password;
     @NotBlank(message = "Please enter type")
     private String type;
+    private String fcmToken;
+
 
 
 }
