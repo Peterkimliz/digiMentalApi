@@ -1,9 +1,6 @@
 package com.example.digimental.services;
 
-import com.example.digimental.dtos.LoginDto;
-import com.example.digimental.dtos.LoginResponse;
-import com.example.digimental.dtos.UpdateUserDto;
-import com.example.digimental.dtos.UserDto;
+import com.example.digimental.dtos.*;
 import com.example.digimental.exceptions.FoundException;
 import com.example.digimental.exceptions.NotFoundException;
 import com.example.digimental.models.User;
@@ -28,6 +25,8 @@ import java.util.*;
 
 @Service
 public class UserService {
+    @Autowired
+    NotificationService notificationService;
     @Autowired
     EmailService emailService;
 
@@ -60,6 +59,10 @@ public class UserService {
 
         String token = jwtUtils.generateToken(user.getEmail());
         userRepository.save(user);
+        Notification notification=new Notification();
+        notification.setSubject("Account verification");
+        notification.setContent("Your Account has been Created successfully");
+        notificationService.sendNotification(notification,user.getFcmToken());
         return new LoginResponse(user, token);
     }
 
@@ -97,6 +100,7 @@ public class UserService {
         user.setWorkingDays(updateUserDto.getWorkingDays() == null ? user.getWorkingDays() : updateUserDto.getWorkingDays());
         User updateduser = userRepository.save(user);
         ApiFuture<WriteResult> apiFuture = firestore.collection("users").document(updateduser.getId()).set(updateduser);
+
         return updateduser;
     }
 
@@ -177,6 +181,10 @@ public class UserService {
         if (!user.getIsVerified()) {
             user.setIsVerified(true);
             emailService.sendEmail("digimhealth@gmail.com", user.getEmail(), "Your Account has been verified", "Account Verification");
+            Notification notification=new Notification();
+            notification.setSubject("Account verification");
+            notification.setContent("Your Account has been  verified you can continue using the app");
+            notificationService.sendNotification(notification,user.getFcmToken());
         }
 
         userRepository.save(user);

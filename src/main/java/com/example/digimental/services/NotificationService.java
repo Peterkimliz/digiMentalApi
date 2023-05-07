@@ -14,22 +14,26 @@ public class NotificationService {
     @Autowired
     FirebaseMessaging firebaseMessaging;
 
-    public String sendNotification(Notification note, String token) throws FirebaseMessagingException {
+    public void sendNotification(Notification note, String token) {
 
-        com.google.firebase.messaging.Notification notification = com.google.firebase.messaging.Notification
-                .builder()
-                .setTitle(note.getSubject())
-                .setBody(note.getContent())
-                .build();
+        try {
+            com.google.firebase.messaging.Notification notification = com.google.firebase.messaging.Notification
+                    .builder()
+                    .setTitle(note.getSubject())
+                    .setBody(note.getContent())
+                    .build();
 
-        Message message = Message
-                .builder()
-                .setToken(token)
-                .setNotification(notification)
-                .putAllData(note.getData())
-                .build();
+            Message message = Message
+                    .builder()
+                    .setToken(token)
+                    .setNotification(notification)
+                    .putAllData(note.getData())
+                    .build();
 
-        return firebaseMessaging.send(message);
+            firebaseMessaging.send(message);
+        } catch (FirebaseMessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
