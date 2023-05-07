@@ -27,7 +27,7 @@ public class NotificationService {
                     .builder()
                     .setToken(token)
                     .setNotification(notification)
-                    .putAllData(note.getData())
+//                    .putAllData(note.getData())
                     .build();
 
             firebaseMessaging.send(message);
