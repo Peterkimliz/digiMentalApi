@@ -28,6 +28,8 @@ public class NotificationService {
                     .setNotification(notification)
 //                    .putAllData(note.getData())
                     .build();
+            System. out. println(token);
+            System. out. println( firebaseMessaging.send(message));
 
             firebaseMessaging.send(message);
         } catch (FirebaseMessagingException e) {
