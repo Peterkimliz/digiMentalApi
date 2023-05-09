@@ -26,8 +26,6 @@ import java.util.*;
 @Service
 public class UserService {
     @Autowired
-    NotificationService notificationService;
-    @Autowired
     EmailService emailService;
 
     @Autowired
@@ -62,7 +60,7 @@ public class UserService {
         Notification notification=new Notification();
         notification.setSubject("Account verification");
         notification.setContent("Your Account has been Created successfully");
-        notificationService.sendNotification(notification,user.getFcmToken());
+
         return new LoginResponse(user, token);
     }
 
@@ -184,7 +182,6 @@ public class UserService {
             Notification notification=new Notification();
             notification.setSubject("Account verification");
             notification.setContent("Your Account has been  verified you can continue using the app");
-            notificationService.sendNotification(notification,user.getFcmToken());
         }
 
         userRepository.save(user);

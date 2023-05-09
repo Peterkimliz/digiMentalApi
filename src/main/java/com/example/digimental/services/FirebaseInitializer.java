@@ -1,12 +1,9 @@
 package com.example.digimental.services;
 
-import com.google.api.client.util.Value;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.google.firebase.messaging.FirebaseMessaging;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
@@ -34,36 +31,5 @@ public class FirebaseInitializer {
         throw new RuntimeException(e);
     }
 }
-
-    @Bean
-    FirebaseMessaging firebaseMessaging() {
-
-        try {
-            GoogleCredentials googleCredentials  = GoogleCredentials.fromStream(new ClassPathResource("digimhealthfirebase.json").getInputStream());
-            FirebaseOptions firebaseOptions = FirebaseOptions
-                    .builder()
-                    .setCredentials(googleCredentials)
-                    .build();
-            FirebaseApp app = FirebaseApp.initializeApp(firebaseOptions);
-            FirebaseMessaging firebaseMessaging= FirebaseMessaging.getInstance(app);
-            System.out.println("firebase messaging instanciated "+firebaseMessaging);
-            return  firebaseMessaging;
-        } catch (IOException e) {
-            System.out.println("error has occurred "+e);
-            throw new RuntimeException(e);
-        }
-
-    }
-
-
-
-
-
-
-
-
-
-
-
 
 }

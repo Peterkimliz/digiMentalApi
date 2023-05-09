@@ -7,13 +7,10 @@ import com.example.digimental.models.Meeting;
 import com.example.digimental.models.User;
 import com.example.digimental.repository.MeetingRepository;
 import com.example.digimental.repository.UserRepository;
-import com.google.api.client.util.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,8 +20,6 @@ public class MeetingService {
     private  MeetingRepository meetingRepository;
     @Autowired
     UserRepository userRepository;
-    @Autowired
-    NotificationService notificationService;
 
 
 
@@ -49,12 +44,6 @@ public class MeetingService {
         meeting.setStartTime(meetingDto.getStartTime());
         meeting.setStatus(meetingDto.getStatus());
         Notification notification=new Notification();
-        notification.setContent("Your meeting has been successfully scheduled");
-        notification.setSubject("Your meeting has been successfully scheduled");
-        notificationService.sendNotification(notification,user.get().getFcmToken());
-        notification.setContent(user.get().getUsername()+"scheduled meeting with you");
-        notification.setSubject(user.get().getUsername()+"scheduled meeting with you");
-        notificationService.sendNotification(notification,user.get().getFcmToken());
         return  meetingRepository.save(meeting);
     }
 
