@@ -1,5 +1,6 @@
 package com.example.digimental.services;
 
+import com.google.api.client.util.Value;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -14,6 +15,7 @@ import java.io.IOException;
 
 @Service
 public class FirebaseInitializer {
+
 @Bean
     public void initializer() {
 
@@ -22,7 +24,7 @@ public class FirebaseInitializer {
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .build();
-        FirebaseApp.initializeApp(options);
+        FirebaseApp.initializeApp(options,"dev project");
         System.out.println("firebase initialized");
     } catch (FileNotFoundException e) {
         System.out.println("firebase failed");
@@ -34,16 +36,28 @@ public class FirebaseInitializer {
 }
 
     @Bean
-    FirebaseMessaging firebaseMessaging() throws IOException {
-        GoogleCredentials googleCredentials = GoogleCredentials
-                .fromStream(new ClassPathResource("digimhealthfirebase.json").getInputStream());
-        FirebaseOptions firebaseOptions = FirebaseOptions
-                .builder()
-                .setCredentials(googleCredentials)
-                .build();
-        FirebaseApp app = FirebaseApp.initializeApp(firebaseOptions, "my-app");
-        return FirebaseMessaging.getInstance(app);
+    FirebaseMessaging firebaseMessaging() {
+
+        try {
+            GoogleCredentials googleCredentials  = GoogleCredentials.fromStream(new ClassPathResource("digimhealthfirebase.json").getInputStream());
+            FirebaseOptions firebaseOptions = FirebaseOptions
+                    .builder()
+                    .setCredentials(googleCredentials)
+                    .build();
+            FirebaseApp app = FirebaseApp.initializeApp(firebaseOptions, "my-firebase-app");
+            FirebaseMessaging firebaseMessaging= FirebaseMessaging.getInstance(app);
+            System.out.println("firebase messaging instanciated "+firebaseMessaging);
+            return  firebaseMessaging;
+        } catch (IOException e) {
+            System.out.println("error has occurred "+e);
+            throw new RuntimeException(e);
+        }
+
     }
+
+
+
+
 
 
 
