@@ -44,7 +44,7 @@ public class FirebaseInitializer {
                     .builder()
                     .setCredentials(googleCredentials)
                     .build();
-            FirebaseApp app = FirebaseApp.initializeApp(firebaseOptions, "my-firebase-app");
+            FirebaseApp app = FirebaseApp.initializeApp(firebaseOptions);
             FirebaseMessaging firebaseMessaging= FirebaseMessaging.getInstance(app);
             System.out.println("firebase messaging instanciated "+firebaseMessaging);
             return  firebaseMessaging;
