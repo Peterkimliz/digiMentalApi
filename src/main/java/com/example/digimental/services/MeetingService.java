@@ -1,6 +1,7 @@
 package com.example.digimental.services;
 
 import com.example.digimental.dtos.MeetingDto;
+import com.example.digimental.dtos.Notification;
 import com.example.digimental.exceptions.NotFoundException;
 import com.example.digimental.models.Meeting;
 import com.example.digimental.models.User;
@@ -22,6 +23,8 @@ public class MeetingService {
     private  MeetingRepository meetingRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    NotificationService notificationService;
 
 
 
@@ -45,6 +48,13 @@ public class MeetingService {
         meeting.setTitle(meetingDto.getTitle());
         meeting.setStartTime(meetingDto.getStartTime());
         meeting.setStatus(meetingDto.getStatus());
+        Notification notification=new Notification();
+        notification.setContent("Your meeting has been successfully scheduled");
+        notification.setSubject("Your meeting has been successfully scheduled");
+        notificationService.sendNotification(notification,user.get().getFcmToken());
+        notification.setContent(user.get().getUsername()+"scheduled meeting with you");
+        notification.setSubject(user.get().getUsername()+"scheduled meeting with you");
+        notificationService.sendNotification(notification,user.get().getFcmToken());
         return  meetingRepository.save(meeting);
     }
 
