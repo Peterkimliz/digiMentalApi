@@ -55,7 +55,7 @@ public class UserService {
         userRepository.save(user);
 //         createUserToFirebase(user);
         String token = jwtUtils.generateToken(user.getEmail());
-        return new LoginResponse(user, "789");
+        return new LoginResponse(user, token);
     }
 
 
