@@ -53,9 +53,9 @@ public class UserService {
         user.setIsVerified(userDto.getType().equals("patient"));
         user.setEmail(userDto.getEmail());
         userRepository.save(user);
-        createUserToFirebase(user);
-        String token = jwtUtils.generateToken(user.getEmail());
-        return new LoginResponse(user, token);
+//         createUserToFirebase(user);
+//         String token = jwtUtils.generateToken(user.getEmail());
+        return new LoginResponse(user, "789");
     }
 
 
