@@ -166,6 +166,7 @@ public class UserService {
         DocumentReference documentReference = firestore.collection("users").document();
         user.setId(documentReference.getId());
         ApiFuture<WriteResult> apiFuture = documentReference.set(user);
+          System.out.println("USER CREATED "+user);  
         System.out.println(apiFuture);
         } catch (Exception e) {
             System.out.println(e);
