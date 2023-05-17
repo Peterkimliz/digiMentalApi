@@ -52,15 +52,9 @@ public class UserService {
         user.setType(userDto.getType());
         user.setIsVerified(userDto.getType().equals("patient"));
         user.setEmail(userDto.getEmail());
-        user.setFcmToken(userDto.getFcmToken());
-        createUserToFirebase(user);
-
-        String token = jwtUtils.generateToken(user.getEmail());
         userRepository.save(user);
-        Notification notification=new Notification();
-        notification.setSubject("Account verification");
-        notification.setContent("Your Account has been Created successfully");
-
+        createUserToFirebase(user);
+        String token = jwtUtils.generateToken(user.getEmail());
         return new LoginResponse(user, token);
     }
 
