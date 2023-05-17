@@ -52,9 +52,10 @@ public class UserService {
         user.setType(userDto.getType());
         user.setIsVerified(userDto.getType().equals("patient"));
         user.setEmail(userDto.getEmail());
+        createUserToFirebase(user);
         userRepository.save(user);
-//         createUserToFirebase(user);
         String token = jwtUtils.generateToken(user.getEmail());
+       
         return new LoginResponse(user, token);
     }
 
@@ -159,12 +160,18 @@ public class UserService {
     }
 
 
-    public void createUserToFirebase(User user) {
+    public void createUserToFirebase(User user) { 
+     try {
         Firestore firestore = FirestoreClient.getFirestore();
         DocumentReference documentReference = firestore.collection("users").document();
         user.setId(documentReference.getId());
         ApiFuture<WriteResult> apiFuture = documentReference.set(user);
         System.out.println(apiFuture);
+        } catch (Exception e) {
+            System.out.println(e);
+         
+        }
+          
     }
 
 
