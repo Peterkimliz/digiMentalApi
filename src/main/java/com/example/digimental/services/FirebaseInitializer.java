@@ -21,7 +21,7 @@ public class FirebaseInitializer {
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .build();
-        FirebaseApp.initializeApp(options,"dev project");
+        FirebaseApp.initializeApp(options);
         System.out.println("firebase initialized");
     } catch (FileNotFoundException e) {
         System.out.println("firebase failed");
